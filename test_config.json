@@ -1,0 +1,35 @@
+{
+  "test_config": {
+    "max_processing_time": 30,
+    "max_memory_usage": 500,
+    "max_concurrent": 5,
+    "test_images": [
+      {"path": "test_images/image1.jpg", "format": "jpg", "size": "1024x768"},
+      {"path": "test_images/image2.png", "format": "png", "size": "1920x1080"},
+      {"path": "test_images/image3.tiff", "format": "tiff", "size": "4000x3000"}
+    ],
+    "test_videos": [
+      {"path": "test_videos/video1.mp4", "format": "mp4", "resolution": "1080p", "duration": "2:30"},
+      {"path": "test_videos/video2.avi", "format": "avi", "resolution": "720p", "duration": "1:45"},
+      {"path": "test_videos/video3.mov", "format": "mov", "resolution": "4K", "duration": "5:00"}
+    ],
+    "invalid_files": [
+      {"path": "test_files/corrupt.jpg", "description": "Imagen corrupta"},
+      {"path": "test_files/invalid.txt", "description": "Archivo de texto"},
+      {"path": "test_files/empty.png", "description": "Imagen vacía"}
+    ],
+    "mcp_servers": {
+      "vision-context": {
+        "command": "uvx",
+        "args": ["vision-context-mcp"],
+        "env": {}
+      }
+    },
+    "test_environment": {
+      "os": "Ubuntu 24.04",
+      "python_version": "3.12+",
+      "memory_limit": "16GB",
+      "cpu_cores": 4
+    }
+  }
+}

@@ -1,0 +1,233 @@
+{
+  "summary": {
+    "timestamp": 1773172473.88574,
+    "project_name": "Vision Context MCP",
+    "overall_status": "deficiente",
+    "test_summary": {
+      "average_processing_time": 0.022541284561157227,
+      "max_processing_time": 0.0240323543548584,
+      "total_errors": 24,
+      "success_rate": 0.1724137931034483,
+      "peak_memory_usage": 0,
+      "total_tests": 11,
+      "timestamp": 1773172459.2844326
+    },
+    "performance_summary": {},
+    "security_summary": {},
+    "production_summary": {},
+    "recommendations": [
+      "Mejorar la cobertura de tests funcionales",
+      "Corregir errores detectados en los tests",
+      "Mejorar configuraci\u00f3n de producci\u00f3n"
+    ],
+    "final_score": 15.086206896551724
+  },
+  "analysis": {
+    "strengths": [
+      "Sin vulnerabilidades de seguridad detectadas"
+    ],
+    "weaknesses": [
+      "Rendimiento general por debajo de lo esperado",
+      "Cobertura de tests funcional insuficiente",
+      "Problemas en configuraci\u00f3n de producci\u00f3n"
+    ],
+    "opportunities": [
+      "Optimizaci\u00f3n de rendimiento para alcanzar excelencia",
+      "Aumentar cobertura de tests al 100%",
+      "Mejorar configuraci\u00f3n de producci\u00f3n para alta disponibilidad"
+    ],
+    "threats": [
+      "Riesgo de inestabilidad del sistema",
+      "Posibles fallos funcionales en producci\u00f3n"
+    ],
+    "comparative_analysis": {
+      "industry_standards": {
+        "test_coverage": "95-100%",
+        "performance": "response_time < 2s",
+        "security": "0 critical vulnerabilities",
+        "uptime": "99.9%"
+      },
+      "project_performance": {
+        "test_coverage": "17.2%",
+        "performance": "0.00s",
+        "security": "0 vulnerabilities",
+        "uptime": "0.0%"
+      },
+      "gap_analysis": {
+        "test_coverage": -77.75862068965516,
+        "performance": -2,
+        "security": 0,
+        "uptime": 99.9
+      }
+    }
+  },
+  "visualizations": {
+    "radar_chart": {
+      "categories": [
+        "Funcionalidad",
+        "Rendimiento",
+        "Seguridad",
+        "Producci\u00f3n",
+        "Experiencia de Usuario"
+      ],
+      "project_scores": [
+        17.24137931034483,
+        0.0,
+        100.0,
+        0,
+        0
+      ],
+      "industry_standards": [
+        95,
+        100,
+        100,
+        99.9,
+        95
+      ]
+    },
+    "progress_bars": {
+      "test_coverage": {
+        "value": 17.24137931034483,
+        "target": 95
+      },
+      "performance": {
+        "value": 100.0,
+        "target": 100
+      },
+      "security": {
+        "value": 100,
+        "target": 100
+      },
+      "production": {
+        "value": 0,
+        "target": 90
+      }
+    },
+    "trend_charts": {
+      "historical_trend": [
+        {
+          "month": "Enero",
+          "score": 75
+        },
+        {
+          "month": "Febrero",
+          "score": 78
+        },
+        {
+          "month": "Marzo",
+          "score": 15.086206896551724
+        }
+      ],
+      "projected_trend": [
+        {
+          "month": "Abril",
+          "score": 15.840517241379311
+        },
+        {
+          "month": "Mayo",
+          "score": 16.594827586206897
+        },
+        {
+          "month": "Junio",
+          "score": 17.34913793103448
+        }
+      ]
+    }
+  },
+  "historical_data": {
+    "monthly_scores": [
+      {
+        "month": "Enero 2024",
+        "score": 72
+      },
+      {
+        "month": "Febrero 2024",
+        "score": 75
+      },
+      {
+        "month": "Marzo 2024",
+        "score": 78
+      },
+      {
+        "month": "Abril 2024",
+        "score": 82
+      },
+      {
+        "month": "Mayo 2024",
+        "score": 85
+      },
+      {
+        "month": "Junio 2024",
+        "score": 88
+      },
+      {
+        "month": "Julio 2024",
+        "score": 91
+      },
+      {
+        "month": "Agosto 2024",
+        "score": 93
+      },
+      {
+        "month": "Septiembre 2024",
+        "score": 95
+      },
+      {
+        "month": "Octubre 2024",
+        "score": 96
+      },
+      {
+        "month": "Noviembre 2024",
+        "score": 97
+      },
+      {
+        "month": "Diciembre 2024",
+        "score": 98
+      }
+    ],
+    "yearly_averages": {
+      "2023": 65,
+      "2024": 85,
+      "2025": 92
+    }
+  },
+  "action_plan": {
+    "immediate_actions": [
+      "Realizar auditor\u00eda completa del sistema",
+      "Corregir errores cr\u00edticos detectados"
+    ],
+    "short_term_goals": [
+      "Aumentar puntaje general a 85+ en 30 d\u00edas",
+      "Alcanzar 95% de cobertura de tests en 2 semanas",
+      "Mejorar configuraci\u00f3n de producci\u00f3n a 85+ en 15 d\u00edas"
+    ],
+    "long_term_strategies": [
+      "Implementar arquitectura de microservicios",
+      "Automatizar testing con CI/CD",
+      "Implementar infraestructura en la nube con autoescalado"
+    ],
+    "success_metrics": {
+      "kpi_metrics": {
+        "test_coverage": "95-100%",
+        "response_time": "< 2s",
+        "uptime": "99.9%",
+        "security_vulnerabilities": "0 cr\u00edticas",
+        "user_satisfaction": "> 90%"
+      },
+      "current_metrics": {
+        "test_coverage": "17.2%",
+        "response_time": "0.00s",
+        "uptime": "0.0%",
+        "security_vulnerabilities": "0 cr\u00edticas",
+        "user_satisfaction": "0.0%"
+      },
+      "target_metrics": {
+        "test_coverage": "100%",
+        "response_time": "< 1s",
+        "uptime": "99.99%",
+        "security_vulnerabilities": "0",
+        "user_satisfaction": "95-100%"
+      }
+    }
+  }
+}
