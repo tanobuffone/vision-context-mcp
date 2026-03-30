@@ -5,8 +5,9 @@ A comprehensive MCP server that provides visual analysis tools for images and vi
 generating context for LLMs and 3D model generation.
 """
 
+from __future__ import annotations
+
 import asyncio
-import json
 import logging
 from typing import Any, Optional
 
@@ -20,6 +21,20 @@ from mcp.types import (
 # Import analyzers and preprocessors
 from .preprocessors import edges, depth, pose, segmentation
 from .analyzers import image_analyzer, video_analyzer, entity_extractor
+
+# Import validation utilities
+from .validation import (
+    FileExtensionError,
+    FileNotFoundValidationError,
+    FilePermissionError,
+    FileSizeError,
+    FileValidationError,
+    ParameterValidationError,
+    ToolNotFoundError,
+    ValidationError,
+    safe_json_dumps,
+    validate_tool_arguments,
+)
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -494,21 +509,113 @@ async def list_tools() -> list[Tool]:
 
 @server.call_tool()
 async def call_tool(name: str, arguments: dict[str, Any]) -> list[TextContent]:
-    """Handle tool calls."""
-    
+    """Handle tool calls with comprehensive validation and error reporting."""
+
     try:
-        result = await _execute_tool(name, arguments)
-        return [TextContent(type="text", text=json.dumps(result, indent=2, default=str))]
-    
+        # Validate arguments against tool schema and file constraints
+        validated_args = validate_tool_arguments(name, arguments or {})
+
+        # Execute the validated tool
+        result = await _execute_tool(name, validated_args)
+
+        # Sanitize output for safe JSON serialization
+        return [TextContent(type="text", text=safe_json_dumps(result))]
+
+    except FileNotFoundValidationError as e:
+        logger.warning("File not found in '%s': %s", name, e)
+        return [TextContent(type="text", text=safe_json_dumps({
+            "error": "file_not_found",
+            "message": str(e),
+            "path": e.path,
+            "suggestion": e.suggestion,
+        }))]
+
+    except FileExtensionError as e:
+        logger.warning("Invalid extension in '%s': %s", name, e)
+        return [TextContent(type="text", text=safe_json_dumps({
+            "error": "invalid_extension",
+            "message": str(e),
+            "path": e.path,
+            "suggestion": e.suggestion,
+        }))]
+
+    except FileSizeError as e:
+        logger.warning("File too large in '%s': %s", name, e)
+        return [TextContent(type="text", text=safe_json_dumps({
+            "error": "file_too_large",
+            "message": str(e),
+            "path": e.path,
+            "suggestion": e.suggestion,
+        }))]
+
+    except FilePermissionError as e:
+        logger.warning("Permission denied in '%s': %s", name, e)
+        return [TextContent(type="text", text=safe_json_dumps({
+            "error": "permission_denied",
+            "message": str(e),
+            "path": e.path,
+            "suggestion": e.suggestion,
+        }))]
+
+    except FileValidationError as e:
+        logger.warning("File validation error in '%s': %s", name, e)
+        return [TextContent(type="text", text=safe_json_dumps({
+            "error": "file_validation_error",
+            "message": str(e),
+            "path": e.path,
+            "suggestion": e.suggestion,
+        }))]
+
+    except ParameterValidationError as e:
+        logger.warning("Parameter error in '%s': %s", name, e)
+        return [TextContent(type="text", text=safe_json_dumps({
+            "error": "invalid_parameter",
+            "message": str(e),
+            "field": e.field,
+            "suggestion": e.suggestion,
+        }))]
+
+    except ToolNotFoundError as e:
+        logger.error("Unknown tool requested: %s", name)
+        return [TextContent(type="text", text=safe_json_dumps({
+            "error": "unknown_tool",
+            "message": str(e),
+            "suggestion": e.suggestion,
+        }))]
+
+    except ValidationError as e:
+        logger.warning("Validation error in '%s': %s", name, e)
+        return [TextContent(type="text", text=safe_json_dumps({
+            "error": "validation_error",
+            "message": str(e),
+            "field": e.field,
+            "suggestion": e.suggestion,
+        }))]
+
     except FileNotFoundError as e:
-        return [TextContent(type="text", text=f"Error: File not found - {str(e)}")]
-    
+        logger.warning("File not found in '%s': %s", name, e)
+        return [TextContent(type="text", text=safe_json_dumps({
+            "error": "file_not_found",
+            "message": str(e),
+            "suggestion": "Verify the file path exists and is accessible.",
+        }))]
+
     except ValueError as e:
-        return [TextContent(type="text", text=f"Error: Invalid input - {str(e)}")]
-    
+        logger.warning("Value error in '%s': %s", name, e)
+        return [TextContent(type="text", text=safe_json_dumps({
+            "error": "invalid_input",
+            "message": str(e),
+            "suggestion": "Check parameter values against the tool schema.",
+        }))]
+
     except Exception as e:
-        logger.exception(f"Tool execution failed: {name}")
-        return [TextContent(type="text", text=f"Error: {str(e)}")]
+        logger.exception("Unexpected error executing tool '%s'", name)
+        return [TextContent(type="text", text=safe_json_dumps({
+            "error": "internal_error",
+            "message": f"Tool execution failed: {type(e).__name__}",
+            "detail": str(e),
+            "suggestion": "Check server logs for full traceback. Report persistent issues.",
+        }))]
 
 
 async def _execute_tool(name: str, arguments: dict[str, Any]) -> dict[str, Any]:
